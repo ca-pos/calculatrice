@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QWidget, QGridLayout, QLineEdit, QPushButton
+from PySide6.QtWidgets import QApplication, QWidget, QGridLayout, QLineEdit, QPushButton, QVBoxLayout
 
 BUTTONS = { "C": (1, 0, 1, 1),
             "E": (1, 1, 1, 1),
@@ -37,8 +37,6 @@ class Calculator(QWidget):
         layout.addWidget(self.btn, 1,0,1,1)
         self.btn = QPushButton("\u25C0")
         layout.addWidget(self.btn, 1,1,1,1)
-        self.btn = QPushButton("=")
-        layout.addWidget(self.btn, 1,2,1,1)
         self.btn = QPushButton("x")
         layout.addWidget(self.btn, 1,3,1,1)
         self.btn = QPushButton("7")
@@ -67,8 +65,20 @@ class Calculator(QWidget):
         layout.addWidget(self.btn, 2,3,1,1)
         self.btn = QPushButton("-")
         layout.addWidget(self.btn, 3,3,1,1)
+
+        # plus_layout = QVBoxLayout()
+        # self.btn = QPushButton("+")
+        # self.btn.setFixedSize(45,68)
+        # plus_layout.addWidget(self.btn)
+        # layout.addLayout(plus_layout, 4, 3)
+
+
+        # self.btn = QPushButton("=")
+        # layout.addWidget(self.btn, 1,2,1,1)
+        self.btn = QPushButton("=")
+        layout.addWidget(self.btn, 5,3,1,1)
         self.btn = QPushButton("+")
-        layout.addWidget(self.btn, 4,3,2,2)
+        layout.addWidget(self.btn, 4,3, 1, 1)
 
 
 app = QApplication(sys.argv)
