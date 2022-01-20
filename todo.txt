@@ -1,0 +1,6 @@
+touche changement de signe
+ajouter un menu :
+    Fichier | Préférences | thème, RPN
+    Quitter
+
+tests unitaires
