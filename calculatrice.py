@@ -1,8 +1,8 @@
 import sys
 from PySide6.QtWidgets import QApplication, QWidget, QGridLayout, QLineEdit, QPushButton
-from PySide6 import QtCore, QtGui
-from PySide6.QtCore import Qt, QEvent
-from PySide6.QtGui import QFont, QKeyEvent
+#from PySide6 import QtCore, QtGui
+from PySide6.QtCore import Qt #, QEvent
+from PySide6.QtGui import QFont, QShortcut, QKeySequence #, QKeyEvent
 from functools import partial
 
 class Calculator(QWidget):
@@ -45,18 +45,18 @@ class Calculator(QWidget):
         for label, object in self.dict_btn.items():
             self.dict_btn[label].clicked.connect(partial(self.press, label))
             i += 1
+        self.raccourcis_clavier()
 
-    def keyPressEvent(self, e: QtGui.QKeyEvent) -> None:
-        super().keyPressEvent(e)
-        label = e.text()
-        if (e.key() == Qt.Key_Return) or (e.key() == Qt.Key_Enter):
-            label = "="
-        elif(e.key() == Qt.Key_Backspace):
-            label = "\u25C0"
+    def raccourcis_clavier(self):
+        for label, btn in self.dict_btn.items():
+            QShortcut(QKeySequence(label), self, btn.clicked.emit)
 
-        self.press(label)
+        QShortcut(QKeySequence(Qt.Key_Return), self, self.dict_btn['='].clicked.emit)
+        QShortcut(QKeySequence(Qt.Key_Enter), self, self.dict_btn['='].clicked.emit)
+        QShortcut(QKeySequence(Qt.Key_Asterisk), self, self.dict_btn['x'].clicked.emit)
+        QShortcut(QKeySequence(Qt.Key_Backspace), self, self.dict_btn['\u25C0'].clicked.emit)
+        
 
-        return
 
     def is_valid(self, label):
         return label in self.btn_valides
