@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QWidget, QGridLayout, QLineEdit, QPushButton
+from PySide6.QtWidgets import QApplication, QWidget, QGridLayout, QLineEdit, QPushButton, QMainWindow
 #from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Qt #, QEvent
 from PySide6.QtGui import QFont, QShortcut, QKeySequence #, QKeyEvent
@@ -46,6 +46,40 @@ class Calculator(QWidget):
             self.dict_btn[label].clicked.connect(partial(self.press, label))
             i += 1
         self.raccourcis_clavier()
+
+    def setup_ui(self):
+
+        layout = QGridLayout(self)
+        
+        self.result_ecran = QLineEdit()
+        self.result_ecran.setText('0')
+        self.result_ecran.setEnabled(False)
+        self.result_ecran.setAlignment(Qt.AlignRight)
+        self.result_ecran.setFont(QFont('Arial', 16))
+        self.result_ecran.setFocusPolicy(Qt.StrongFocus)
+        self.result_ecran.setFocus()
+        layout.addWidget(self.result_ecran, 0,0,1,4)
+
+        for label, position in self.BUTTONS.items():
+            btn = QPushButton(label)
+            layout.addWidget(btn, *position)
+            self.dict_btn[label] = btn
+        btn.setFocus() # évite que que le focus initial soit sur l'effacement (pb de la capture du key_space !)
+
+    def setup_colors(self):
+        self.setStyleSheet("background-color: #5C3D37")
+        self.result_ecran.setStyleSheet("background-color:#756C6A; color:white")
+        i = 0
+        for label, object in self.dict_btn.items():
+            self.dict_btn[label].setFont(QFont('Arial', 14))
+            if i < 2:
+                self.dict_btn[label].setStyleSheet("background-color:#F52D2A")
+            elif i < 7:
+                self.dict_btn[label].setStyleSheet("background-color:#A87065;font-size:18")
+            else:
+                self.dict_btn[label].setStyleSheet("background-color:#F5A494")
+            i += 1
+
 
     def raccourcis_clavier(self):
         for label, btn in self.dict_btn.items():
@@ -115,41 +149,6 @@ class Calculator(QWidget):
         if ecran == "":
             ecran = '0'
         return ecran
-
-    def setup_ui(self):
-
-        layout = QGridLayout(self)
-        
-        self.result_ecran = QLineEdit()
-        self.result_ecran.setText('0')
-        self.result_ecran.setEnabled(False)
-        self.result_ecran.setAlignment(Qt.AlignRight)
-        self.result_ecran.setFont(QFont('Arial', 16))
-        self.result_ecran.setFocusPolicy(Qt.StrongFocus)
-        self.result_ecran.setFocus()
-        layout.addWidget(self.result_ecran, 0,0,1,4)
-
-        for label, position in self.BUTTONS.items():
-            btn = QPushButton(label)
-            layout.addWidget(btn, *position)
-            self.dict_btn[label] = btn
-        btn.setFocus() # évite que que le focus initial soit sur l'effacement (pb du key_space !)
-
-    def setup_colors(self):
-        self.setStyleSheet("background-color: #5C3D37")
-        self.result_ecran.setStyleSheet("background-color:#756C6A; color:white")
-        i = 0
-        for label, object in self.dict_btn.items():
-            self.dict_btn[label].setFont(QFont('Arial', 14))
-            if i < 2:
-                self.dict_btn[label].setStyleSheet("background-color:#F52D2A")
-            elif i < 7:
-                self.dict_btn[label].setStyleSheet("background-color:#A87065;font-size:18")
-            else:
-                self.dict_btn[label].setStyleSheet("background-color:#F5A494")
-            i += 1
-
-
 
 #=======================================#
 #                  Main                 #

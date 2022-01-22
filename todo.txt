@@ -1,6 +1,8 @@
-touche changement de signe
+touche de changement de signe
+fixer le nombre de décimales
 ajouter un menu :
     Fichier | Préférences | thème, RPN
     Quitter
+    ...
 
 tests unitaires
